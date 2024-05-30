@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 require('dotenv').config();
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
 
 const Schema = mongoose.Schema;
 
@@ -35,7 +36,7 @@ userSchema.methods.toJSON = function() {
 }
 
 userSchema.methods.generateToken = function () {
-    const token = jwt.sign({ _id: this._id }, JWT_SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ _id: this._id }, JWT_SECRET_KEY, { expiresIn: '1d' });
     return token;
 };
 

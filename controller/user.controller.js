@@ -26,9 +26,24 @@ userController.createUser = async (req,res)=>{
         res.status(200).json({ status: 'User created successfully.' });
 
     }catch(error){
-        res.status(400).json({ status: 'fail', message: 'Internal Server Error', error: error.message });
+        res.status(400).json({ status: 'fail', error: 'Internal Server Error', error: error.message });
     }
-}
+};
+
+userController.getUser = async (req,res) => {
+    try{
+        const { userId } = req;
+        const user = await User.findById(userId)
+        if(user){
+            res.status(200).json({status:"success", user})
+        } else {
+            throw new Error("Invalid User");
+        }
+        
+    }catch(error){
+        res.status(400).json({status:"fail", error: error.message})
+    }
+};
 
 
 module.exports = userController;

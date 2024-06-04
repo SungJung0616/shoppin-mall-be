@@ -9,7 +9,7 @@ const userController = {}
 userController.createUser = async (req,res)=>{
     try{
         const { email, name, password, level } = req.body;
-              
+        console.log(email, name, password, level);
         const user = await User.findOne({ email });
         if (user) {
             console.log("User already exists:", email);

@@ -24,21 +24,35 @@ authController.loginWithEmail = async (req, res) => {
 };
 
 authController.authenticate = async(req, res, next) => {
-    try{
-        
+    try{        
         const tokenString = req.headers.authorization;        
         if(!tokenString)throw new Error("Authentication token does not exist.")
         const token = tokenString.replace("Bearer ","");        
         jwt.verify(token,JWT_SECRET_KEY,(error,payload)=>{
         if(error)throw new Error("Invalid Token")
         req.userId = payload._id;            
-        })        
+        }) 
+        console.log(req.userId);  
         next();
 
     }catch(error){
         res.status(400).json({status:"fail", error:error.message})
     }
-
 }
+
+authController.checkAdminPermission = async(req,res, next)=> {
+    try{
+        const { userId } = req;
+        console.log(userId.level);
+        const user = await User.findById(userId);
+        console.log(user)
+        if(user.level !=="admin") throw new Error("NO PERMISSION")
+        next();
+
+    }catch(error){
+        res.status(400).json({status:"fail", error:error.message})
+    }
+}
+
 
 module.exports = authController;

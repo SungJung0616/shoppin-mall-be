@@ -9,4 +9,10 @@ router.post('/', authController.authenticate, authController.checkAdminPermissio
 
 router.get('/',productController.getProducts);
 
+router.get('/:id', productController.getProductDetail);
+
+router.put('/:id',authController.authenticate, authController.checkAdminPermission, productController.updateProducts)
+
+router.delete('/:id', authController.authenticate, authController.checkAdminPermission, productController.deleteProduct);
+
 module.exports = router;

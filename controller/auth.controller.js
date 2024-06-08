@@ -31,8 +31,7 @@ authController.authenticate = async(req, res, next) => {
         jwt.verify(token,JWT_SECRET_KEY,(error,payload)=>{
         if(error)throw new Error("Invalid Token")
         req.userId = payload._id;            
-        }) 
-        console.log(req.userId);  
+        })          
         next();
 
     }catch(error){

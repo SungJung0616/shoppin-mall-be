@@ -4,10 +4,12 @@ const router = express.Router();
 const userAPI = require("./user.api")
 const authAPI = require("./auth.api")
 const productAPI = require("./product.api")
+const cartAPI = require("./cart.api")
 
 router.use('/auth', authAPI);
 router.use('/user', userAPI);
 router.use('/product', productAPI)
-console.log("/user")
+router.use('/cart',cartAPI)
+
 
 module.exports = router;

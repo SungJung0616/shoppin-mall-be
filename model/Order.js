@@ -6,18 +6,6 @@ require('dotenv').config();
 
 const Schema = mongoose.Schema;
 const orderSchema = new Schema({
-    shipTo: {
-        type: Object,
-        required: true
-    },
-    contact: {
-        type: Object,
-        required: true
-    },
-    totalPrice: {
-        type: Number,
-        required: true
-    },
     userId: {
         type: mongoose.ObjectId,
         ref: 'User',
@@ -26,6 +14,18 @@ const orderSchema = new Schema({
     status: {
         type: String,
         default: 'preparing'
+    },
+    totalPrice: {
+        type: Number,
+        required: true
+    },
+    shipTo: {
+        type: Object,
+        required: true
+    },
+    contact: {
+        type: Object,
+        required: true
     },
     orderNum: {
         type: String,

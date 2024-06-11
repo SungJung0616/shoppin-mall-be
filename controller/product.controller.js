@@ -85,9 +85,9 @@ productController.getProductDetail = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   };
-productController.checkStock = async (item) => {
+productController.checkStock = async (item, session) => {
     //내가 사려는 아이템 재고정보 들고오기
-    const product = await Product.findById(item.productId)
+    const product = await Product.findById(item.productId).session(session);
     //내가 사려는 아이템 qty, 재고 비교
     if(product.stock[item.size] < item.qty){
         return {isVerify : false, message: `${product.name}의 ${item.size} 재고가 부족합니다.`}
@@ -95,17 +95,18 @@ productController.checkStock = async (item) => {
     const newStock = {...product.stock}
     newStock[item.size] -= item.qty
     product.stock = newStock;
-    return {isVerify : true,}
-    await product.save();
+
+    await product.save({ session });
+    return {isVerify : true,}    
     //재고가 불충분하면 불충분 메세지와 데이터 반환
     //충분하면 재고에서 - qty 성공
 }
 
-productController.checkItemListStock = async (itemList) => {
+productController.checkItemListStock = async (itemList, session) => {
     const insufficientStockItems = [];
     //재고를 확인하는 로직
     await Promise.all(itemList.map(async (item)=>{
-        const stockCheck = await productController.checkStock(item);
+        const stockCheck = await productController.checkStock(item,session);
         if(!stockCheck.isVerify){
             insufficientStockItems.push({item, message : stockCheck.message})
         }

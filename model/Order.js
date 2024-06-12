@@ -1,6 +1,7 @@
 const User = require("./User");
 const Product = require("./Product");
 const mongoose = require("mongoose");
+const Cart = require("./Cart")
 require('dotenv').config();
 
 
@@ -55,12 +56,17 @@ const orderSchema = new Schema({
 },{timestamps:true})
 
 orderSchema.methods.toJSON = function() {
-    const obj = this._doc;
-    delete obj.createdAt;
-    delete obj.updatedAt;
+    const obj = this._doc;   
+    
     delete obj.__v;
     return obj;
 }
+
+orderSchema.post("save",async function(){
+    const cart = await Cart.findOne({userId : this.userId})
+    cart.items=[];
+    await cart.save();
+})
 
 
 

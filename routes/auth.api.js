@@ -5,7 +5,10 @@ const router = express.Router();
 
 
 router.get('/me',authController.authenticate, userController.getUser)
+
 router.post('/login', authController.loginWithEmail);
+
+router.post('/google', authController.loginWithGoogle);
 
 
 

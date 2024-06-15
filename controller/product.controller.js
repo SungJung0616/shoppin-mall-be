@@ -16,11 +16,15 @@ productController.createProduct = async (req, res) => {
 
 productController.getProducts = async (req, res) => {
     try {
-        const { page, name } = req.query;
+        const { page, name, category } = req.query;
         const cond = { isDeleted: false }; 
         if (name) {
             cond.name = { $regex: name, $options: "i" };
         }
+
+        if (category && category !== "all") {
+            cond.category = category;
+          }
 
         let query = Product.find(cond);
         let response = { status: "success" };
@@ -116,6 +120,24 @@ productController.checkItemListStock = async (itemList, session) => {
 
     return insufficientStockItems;
 }
+
+productController.getNewProducts = async (req, res) => {
+    try {
+      const products = await Product.find({ category: 'new', isDeleted: false });
+      res.status(200).json({ status: "success", data: products });
+    } catch (error) {
+      res.status(400).json({ status: "fail", error: error.message });
+    }
+  };
+
+productController.getSaleProducts = async (req, res) => {
+    try {
+      const products = await Product.find({ category: 'sale', isDeleted: false });
+      res.status(200).json({ status: "success", data: products });
+    } catch (error) {
+      res.status(400).json({ status: "fail", error: error.message });
+    }
+  };
  
   
 module.exports = productController;

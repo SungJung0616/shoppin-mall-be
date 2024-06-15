@@ -6,6 +6,9 @@ const router = express.Router();
 // endpoint for register
 
 router.get('/me',authController.authenticate, userController.getUser)
+router.put('/me', authController.authenticate, userController.updateUser);
+
+
 router.post('/', userController.createUser);
 
 

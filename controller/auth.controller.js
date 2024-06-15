@@ -10,12 +10,12 @@ const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 authController.loginWithEmail = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        const user = await User.findOne({ email });
+        const { email, password } = req.body;       
+        const user = await User.findOne({ email });       
         if (user) {
-            const isMatch = await bcrypt.compareSync(password, user.password);
+            const isMatch = await bcrypt.compareSync(password, user.password);            
             if (isMatch) {
-                const token = await user.generateToken();
+                const token = await user.generateToken();               
                 return res.status(200).json({ status: 'success', user, token });
             }
         }
@@ -58,15 +58,17 @@ authController.checkAdminPermission = async(req,res, next)=> {
 authController.loginWithGoogle = async (req, res) => {
     try {
         const { token } = req.body;
+        
         const googleClient =  new OAuth2Client(GOOGLE_CLIENT_ID);
         const ticket = await googleClient.verifyIdToken({
             idToken:token,
             audience:GOOGLE_CLIENT_ID,
         })
+        
         const {email, name} = ticket.getPayload()
-        console.log("loginwithgoogle",email, name)
+        
         let user = await User.findOne({email});
-        console.log("user",user)
+        
         if(!user){
             const randomPassword = "" + Math.floor(Math.random()*100000);
             const salt = await bcrypt.genSalt(10);

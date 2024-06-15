@@ -4,8 +4,6 @@ const authController = require("../controller/auth.controller");
 
 const router = express.Router();
 
-console.log("orderController")
-
 router.get("/me", authController.authenticate, orderController.getOrder);
 
 router.get("/", authController.authenticate, orderController.getOrderList);

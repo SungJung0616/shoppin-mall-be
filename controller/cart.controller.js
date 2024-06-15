@@ -33,9 +33,7 @@ cartController.addItemToCart= async (req,res) =>{
 
 cartController.getCart = async (req,res)=> {
     try{
-        const {userId} = req;
-        console.log(userId)
-        //populate 에 대한 이해하고 넘어가기
+        const {userId} = req;        
         const cart = await Cart.findOne({userId}).populate({ 
             path:'items',
             populate:{

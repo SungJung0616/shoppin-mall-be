@@ -9,6 +9,10 @@ router.post('/', authController.authenticate, authController.checkAdminPermissio
 
 router.get('/',productController.getProducts);
 
+router.get('/new', productController.getNewProducts);
+
+router.get('/sale', productController.getSaleProducts);
+
 router.get('/:id', productController.getProductDetail);
 
 router.put('/:id',authController.authenticate, authController.checkAdminPermission, productController.updateProducts)

@@ -20,6 +20,35 @@ const userSchema = new Schema({
         type:String,
         required:true,
     },
+    activityName: {
+        type: String,
+        default: ""
+    },
+    firstName: {
+        type: String,
+        default: ""
+    },
+    lastName: {
+        type: String,
+        default: ""
+    },
+    contact: {
+        type: String,
+        default: ""
+    },
+    address: {
+        type: String,
+        default: ""
+    },
+    city: {
+        type: String,
+        default: ""
+    },
+    zip: {
+        type: String,
+        default: ""
+    },
+    
     level:{
         type:String,
         default:"customer"

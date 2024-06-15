@@ -10,6 +10,6 @@ router.post('/login', authController.loginWithEmail);
 
 router.post('/google', authController.loginWithGoogle);
 
-
+router.get('/users', authController.authenticate, authController.checkAdminPermission, userController.getAllUsers);
 
 module.exports = router;
